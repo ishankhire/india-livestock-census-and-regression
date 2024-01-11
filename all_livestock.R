@@ -346,29 +346,8 @@ change_in_commercial_poultry_model <- weighted_lm_func(df = cross_census_data, x
 summary(change_in_commercial_poultry_model)
 
 ####################################
-### Code for Supplementary file  ### (or to be deleted)
+### Code for Supplementary file  ###
 ####################################
-
-#All poultry together
-
-poultry_data <- select(poultry_data_latest, log_percapita,
-                       proportion_commercial, total_poultry)
-
-poultry_model <- lm(proportion_commercial ~ log_percapita, data=poultry_data,
-                    weights = poultry_data$total_poultry)
-
-summary(poultry_model)
-
-function_poultry_model <- weighted_lm_func(df = poultry_data_latest, x_var = "log_percapita", y_var = "proportion_commercial", weight = "total_poultry")
-create_table_function(function_poultry_model)
-# create_table_function(poultry_model)
-
-ggplot(data = poultry_data_latest, aes(x = log_percapita,
-                                       y = proportion_commercial)) +
-  geom_point(aes(size=total_poultry)) +
-  labs(title    = "Chicken Scatterplot",
-       x = "log of GDP per Capita in USD (PPP)",
-       y = "Proportion of chickens that are commercial")
 
 #Correlation between proportion of fowl of improved breed and proportion of fowl in commercial conditions
 

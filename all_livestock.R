@@ -36,12 +36,6 @@ create_table_function <- function(regression_model) {
   
 }
 
-weighted_lm_func <- function(df, x_var, y_var, weight) {
-  regression_data <- df[, c(x_var, y_var, weight), drop = FALSE]
-  regression_model <- lm(df[[y_var]] ~ df[[x_var]], regression_data, weights = regression_data[[weight]])
-  return(regression_model)
-}
-
 #Import data
 poultry_data_latest <- read_excel("Final Datasets/poultry_data_latest.xlsx")
 cattle_data_latest <- read_excel("Final Datasets/cattle_data_latest.xlsx")
@@ -338,11 +332,6 @@ ggplot(data = cross_census_data, aes(x = percentage_change_in_income,
        x = "Change in Income",
        y = "Change in cattle intensification")
 
-#proportion change in commercial poultry
-cross_census_data$proportion_change_commercial_fowl <- cross_census_data$total_fowl_commercial_2019 - cross_census_data$total_fowl_commercial_2012
-change_in_commercial_poultry_model <- weighted_lm_func(df = cross_census_data, x_var = "percentage_change_in_income", y_var = "proportion_change_commercial_fowl", weight = "total_fowl_commercial_2012")
-summary(change_in_commercial_poultry_model)
-
 ####################################
 ### Code for Supplementary file  ###
 ####################################
@@ -431,7 +420,7 @@ poultry_other_poultry_birds_model <- lm(proportion_other_poultry_birds_commercia
 create_table_function(poultry_other_poultry_birds_model)
 
 
-#Productivity of cattle and breed - may want to move to supplementary file
+#Productivity of cattle and breed
 ggplot(data = cattle_data_latest, aes(x = estimated_cattle_productivity,
                                       y = proportion_cattle_exotic)) +
   geom_point(aes(size=total_cattle)) +

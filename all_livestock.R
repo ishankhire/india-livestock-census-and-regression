@@ -63,8 +63,6 @@ poultry_data_latest$log_percapita <- log(poultry_data_latest$percapita_USD_PPP,
                                          base = 10)
 cattle_data_latest$log_percapita <- log(cattle_data_latest$percapita_USD_PPP,
                                         base = 10)
-cattle_data_latest$log_productivity <- log(cattle_data_latest$estimated_cattle_productivity,
-                                           base = 10)
 all_district_data_regression$log_percapita <- log(all_district_data_regression$percapita_USD_PPP,
                                         base = 10)
 
@@ -465,20 +463,3 @@ cattle_productivity_proxy_model <- lm(estimated_cattle_productivity ~ log_percap
 
 summary(cattle_productivity_proxy_model)
 create_table_function(cattle_productivity_proxy_model)
-
-#Trying out the code taking log of productivity and percapita (got lower R^2 value)
-ggplot(data = cattle_data_latest, aes(x = log_percapita,
-                                      y = log_productivity)) +
-  geom_point(aes(size=total_cattle)) +
-  labs(title    = "Chicken Scatterplot",
-       x = "log of GDP per Capita in USD (PPP)",
-       y = "Proportion of chickens that are commercial")
-
-cattle_data <- select(cattle_data_latest, log_percapita,
-                      log_productivity, total_cattle)
-
-cattle_model <- lm(log_productivity ~ log_percapita, data=cattle_data,
-                   weights = cattle_data$total_cattle)
-
-summary(cattle_model)
-create_table_function(cattle_model)

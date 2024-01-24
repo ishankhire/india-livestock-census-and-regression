@@ -61,7 +61,7 @@ all_district_data_regression$log_percapita <- log(all_district_data_regression$p
                                         base = 10)
 
 #Plotting the map
-district_shapefile <- read_sf("D:/Animal Welfare Research/district.shp")
+district_shapefile <- read_sf("district.shp")
 areas <- st_area(district_shapefile)
 district_shapefile$area <- drop_units(areas)
 district_shapefile$area_in_km2 <- district_shapefile$area / 1000000
